@@ -8,7 +8,6 @@ function addProduct(event){
     event.preventDefault(); 
     saveProduct();
 
-
 }
 
 function saveProduct(){
