@@ -3,6 +3,10 @@ const URL_PRODUCT = "http://localhost:8080/product";
 
 var product = {'id':undefined, 'name': '', 'description': '', 'weight': ''};
 
+var dataTable; 
+
+init();
+
 
 function addProduct(event){
     event.preventDefault(); 
@@ -28,28 +32,12 @@ function saveProduct(){
 	});
 
     document.getElementById('productForm').reset();
-
+	product = {};
     $('#productForm').hide('toogle');
     
 }
 
 
-function showData(){
-    $.ajax({
-        async : true,
-        url : URL_PRODUCT,
-        type : 'GET',
-        success : function(data) {
-            console.log(data);
-        }
-    });
-}
-
-
-
-
-
-init();
 
 function initDataTable(data){
 	let rowData = new Array();
@@ -59,7 +47,8 @@ function initDataTable(data){
 		    item.name,
 		    item.description,
 		    item.weight,
-		    item.price
+		    item.price, 
+			item.id
 		]);
 	});
 	dataTable.clear();
@@ -68,8 +57,6 @@ function initDataTable(data){
 }
     
 function init(){
-
-	console.log('Init');
 
 	dataTable = $('#productTable').DataTable({
 		'processing': true,
@@ -94,17 +81,36 @@ function init(){
 			}
 		},
 		'columns' : [
-            
 				{title : 'Barcode'},
 				{title : 'Producto'},
 				{title : 'Descripcion'},
 				{title : 'Peso'},				
-                {title : 'Precio'},
+                {title : 'Precio'},			
+                {title : 'Accion', 
+				'render' : function(data, type, row, meta) {
+					return '<button class=\"btn btn-warning\"  id=\"' + data + '\" onclick ="{findProductById(' + data + ')}"/>Editar</button>';
+				}}
 			],
 			'dom': "<'row' <'col-sm-12'l> > t <'row' <'col-sm-10'i> <'col-sm-10 textCenter'p> <'col-sm-2'> <'col-sm-1'B> >",
 	});
 
 }
+
+
+function findProductById(id){
+	console.log("El ID es:" + id);
+	$.ajax({
+		type : 'GET',
+		url : URL_PRODUCT + "/findProductById/" + id,
+		success : function(data) {
+			console.log(data);
+	
+		}
+	});
+
+}
+
+
 
 $('#productForm').hide();
 
