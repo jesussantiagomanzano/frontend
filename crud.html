@@ -289,22 +289,40 @@
           <div class="col-lg-6">
             
             <form id="productForm" name="productForm">
+              
+				      <input type="hidden" name="id" id="id" value="null">	
               <div class="row mb-3">
                 <label for="name" class="col-sm-2 col-form-label">Product name</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="name" name="name" onchange="{product.name = event.target.value; }" value="">
+                  <input type="text" class="form-control" id="name" name="name" onchange="{product.name = event.target.value; }" >
                 </div>
               </div>
+
+              <div class="row mb-3">
+                <label for="name" class="col-sm-2 col-form-label">Product barcode</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="barcode" name="barcode" onchange="{product.barcode = event.target.value; }" >
+                </div>
+              </div>       
+
+              <div class="row mb-3">
+                <label for="name" class="col-sm-2 col-form-label">Product price</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" id="price" name="price" onchange="{product.price = event.target.value; }" >
+                </div>
+              </div>
+              
               <div class="row mb-3">
                 <label for="description" class="col-sm-2 col-form-label" >Product description</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="description" name="description" onchange ="{product.description = event.target.value; }" >
                 </div>
               </div>
+
               <div class="row mb-3">
                 <label for="weight" class="col-sm-2 col-form-label" >Product weight</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="weight" name="weight" onchange ="{product.weight = event.target.value;}">
+                  <input type="number" class="form-control" id="weight" name="weight" onchange ="{product.weight = event.target.value;}">
                 </div>
               </div>
               
@@ -340,6 +358,24 @@
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="product={}">Close</button>
                     <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" onclick="saveProduct()">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Basic Modal-->
+
+            <div class="modal fade" id="deleteModal" tabindex="-1">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Eliminar producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Desea eliminar el producto?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="idProductDelete = null">Close</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteProductById()">Eliminar</button>
                   </div>
                 </div>
               </div>

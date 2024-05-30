@@ -16,7 +16,7 @@ function addProduct(event){
 
 function saveProduct(){
     $.ajax({
-		url :  + "/",
+		url :  URL_PRODUCT,
 		type : 'POST',
         headers: {
             "Content-Type": "application/json"
@@ -62,7 +62,8 @@ function init(){
 		'processing': true,
 		//'serverSide': true,
 		'responsive' : true,
-		'autoWidth' : true,
+		'autoWidth' : true, 
+		searching: false,
 		'ajax' : {
 			url : URL_PRODUCT,
 			type : 'GET',
@@ -88,7 +89,8 @@ function init(){
                 {title : 'Precio'},			
                 {title : 'Accion', 
 				'render' : function(data, type, row, meta) {
-					return '<button class=\"btn btn-warning\"  id=\"' + data + '\" onclick ="{findProductById(' + data + ')}"/>Editar</button>';
+					return '<button class=\"btn btn-warning\"  id=\"' + data + '\" onclick ="{findProductById(' + data + ')}"/>Editar</button>' + 
+					'<button class=\"btn btn-danger\"  id=\"' + data + '\" onclick ="{showDeleteModal(' + data + ')}"/>Eliminar</button>';
 				}}
 			],
 			'dom': "<'row' <'col-sm-12'l> > t <'row' <'col-sm-10'i> <'col-sm-10 textCenter'p> <'col-sm-2'> <'col-sm-1'B> >",
@@ -96,17 +98,44 @@ function init(){
 
 }
 
+var idProductDelete;
+function showDeleteModal(id){
+	$('#deleteModal').modal('show');
+	idProductDelete = id;
+}
+
+function deleteProductById(){
+	console.log("ID a eliminar:" +  idProductDelete);
+	$.ajax({
+		type : 'DELETE',
+		url : URL_PRODUCT + "/" + idProductDelete,
+		success : function(data) {
+			console.log(data);
+			dataTable.ajax.reload();
+		}
+	});
+}
+
 
 function findProductById(id){
+	$('#productTable').hide('toogle');
 	console.log("El ID es:" + id);
 	$.ajax({
 		type : 'GET',
 		url : URL_PRODUCT + "/findProductById/" + id,
 		success : function(data) {
 			console.log(data);
+			product = data;
+			$('#id').val(data.id);
+			$('#name').val(data.name);
+			$('#barcode').val(data.barcode);
+			$('#price').val(data.price);
+			$('#description').val(data.description);
+			$('#weight').val(data.weight);
 	
 		}
 	});
+	$('#productForm').show('toogle');
 
 }
 
