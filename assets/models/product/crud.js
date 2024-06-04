@@ -5,14 +5,13 @@ var product = {'id':undefined, 'name': '', 'description': '', 'weight': ''};
 
 var dataTable; 
 
-init();
 
 
 function addProduct(event){
     event.preventDefault(); 
     saveProduct();
-
 }
+
 
 function saveProduct(){
     $.ajax({
@@ -33,7 +32,9 @@ function saveProduct(){
 
     document.getElementById('productForm').reset();
 	product = {};
-    $('#productForm').hide('toogle');
+	
+	dataTable.ajax.reload();
+	showAddProductBtn();
     
 }
 
@@ -57,7 +58,8 @@ function initDataTable(data){
 }
     
 function init(){
-
+	showAddProductBtn();
+	$('#productForm').hide();
 	dataTable = $('#productTable').DataTable({
 		'processing': true,
 		//'serverSide': true,
@@ -116,6 +118,12 @@ function deleteProductById(){
 	});
 }
 
+function showAddProductBtn(){
+	$('#addProductBtn').show();
+	$('#productTable').show();
+    $('#productForm').hide('toogle');
+    document.getElementById('productForm').reset();
+}
 
 function findProductById(id){
 	$('#productTable').hide('toogle');
@@ -136,12 +144,24 @@ function findProductById(id){
 		}
 	});
 	$('#productForm').show('toogle');
+	$('#submitBtn').text('Guardar cambios');
+	$('#addProductBtn').hide();
+	
 
 }
 
 
+function addProduct(){
+	$('#productForm').show('toogle');
+	if(product.id === undefined){
+		$('#submitBtn').text('Agregar producto');
+	}
+	$('#productTable').hide();
+	$('#addProductBtn').hide();
+}
 
-$('#productForm').hide();
+
+init();
 
 
 

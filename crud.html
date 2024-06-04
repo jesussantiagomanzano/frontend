@@ -284,6 +284,9 @@
         </nav>
       </div><!-- End Page Title -->
       
+      <div class="col-sm-10">
+        <button type="button" class="btn btn-primary" id="addProductBtn" name="addProductBtn" data-bs-toggle="modal" onclick="addProduct()">A&ntilde;adir nuevo producto</button>
+      </div>
       <section class="section">
         <div class="row">
           <div class="col-lg-6">
@@ -330,6 +333,7 @@
               <div class="row mb-3">
                 <div class="col-sm-10">
                   <button type="button" class="btn btn-primary" id="submitBtn" name="submitBtn" data-bs-toggle="modal" data-bs-target="#productModal">Add product</button>
+                  <button type="button" class="btn btn-danger" id="submitBtnCancel" name="submitBtnCancel" onclick="showAddProductBtn()">Cancelar</button>
                 </div>
               </div>  
             </form>
@@ -339,7 +343,6 @@
               
             </table>
           </div>
-
 
 
 
