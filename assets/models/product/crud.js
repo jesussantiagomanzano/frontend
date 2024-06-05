@@ -16,25 +16,22 @@ function addProduct(event){
 function saveProduct(){
     $.ajax({
 		url :  URL_PRODUCT,
-		type : 'POST',
+		type : product.id === undefined ? 'POST' : 'PUT',
         headers: {
             "Content-Type": "application/json"
         },
 		data : JSON.stringify(product),
        
 		success : function(data) {
-            console.log(data);
+			document.getElementById('productForm').reset();
+			product = {};
+			showAddProductBtn();
+			dataTable.ajax.reload();
 		},
         error: function(data) {
             console.log(data);
 		}
 	});
-
-    document.getElementById('productForm').reset();
-	product = {};
-	
-	dataTable.ajax.reload();
-	showAddProductBtn();
     
 }
 
@@ -120,9 +117,11 @@ function deleteProductById(){
 
 function showAddProductBtn(){
 	$('#addProductBtn').show();
-	$('#productTable').show();
+	$('#table').show();
     $('#productForm').hide('toogle');
     document.getElementById('productForm').reset();
+	$('#productTable').show();
+	
 }
 
 function findProductById(id){
@@ -146,6 +145,7 @@ function findProductById(id){
 	$('#productForm').show('toogle');
 	$('#submitBtn').text('Guardar cambios');
 	$('#addProductBtn').hide();
+	$('#table').hide();
 	
 
 }
@@ -158,6 +158,7 @@ function addProduct(){
 	}
 	$('#productTable').hide();
 	$('#addProductBtn').hide();
+	$('#table').hide();
 }
 
 
